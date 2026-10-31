@@ -41,13 +41,19 @@ public class Drivetrain extends SubsystemBase {
     leftFollowerConfig.follow(leftLeader);
     rightFollowerConfig.follow(rightLeader);
 
+    // limit current to 40A
+    leftLeaderConfig.smartCurrentLimit(40);
+    rightLeaderConfig.smartCurrentLimit(40);
+    leftFollowerConfig.smartCurrentLimit(40);
+    rightFollowerConfig.smartCurrentLimit(40);
+
     // apply configurations to each  motor controller
     // reset safe parameters to defaults before applying the new configuration.
-    // do not save the settings permanently to the motor controller's memory.
-    leftLeader.configure(leftLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    rightLeader.configure(rightLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    leftFollower.configure(leftFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    rightFollower.configure(rightFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    // save the settings permanently to the motor controller's memory.
+    leftLeader.configure(leftLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    rightLeader.configure(rightLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    leftFollower.configure(leftFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    rightFollower.configure(rightFollowerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
