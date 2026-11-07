@@ -2,11 +2,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import frc.robot.Constants;
-
+import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterFlyWheel extends SubsystemBase{
@@ -27,5 +28,12 @@ public class ShooterFlyWheel extends SubsystemBase{
 
         //Ensure left is following right
         leftTalon.setControl(new Follower(Constants.ShooterFlyWheelConstants.kRightCanID, true));
+    }
+
+    public void shoot(TalonFX talon){
+        //creates a new Bang Bang controller
+        final BangBangController controller = new BangBangController();
+        // Controls a motor with the output of the BangBang controller
+        //talon.set();
     }
 }
