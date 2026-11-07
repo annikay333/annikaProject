@@ -24,4 +24,9 @@ public final class Constants {
     public static final int kBackLeftCanID = 10;
     public static final int kBackRightCanID = 1;
   }
+
+  //two new subsystems flywheel and angle
+  // - ids for motors and what not
+  //constants
+  //2 new commands
 }
