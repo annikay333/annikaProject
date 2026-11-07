@@ -28,6 +28,8 @@ public final class Constants {
   public static class ShooterFlyWheelConstants{
     public static final int kLeftCanID = 0;
     public static final int kRightCanID = 0;
+    public static final int kCANcoderID = 0;
+    public static final int kShooterFlywheelSpeed = 0;
   }
 
   public static class ShooterHoodConstants{

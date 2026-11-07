@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.BangBangController;
@@ -16,10 +17,19 @@ public class ShooterFlyWheel extends SubsystemBase{
     private final TalonFX leftTalon;
     private final TalonFX  rightTalon;
 
+    private final CANcoder encoder;
+
     public ShooterFlyWheel(){
         //Motor controlers for left and right sides of shooter
         leftTalon = new TalonFX(Constants.ShooterFlyWheelConstants.kLeftCanID);
         rightTalon = new TalonFX(Constants.ShooterFlyWheelConstants.kRightCanID);
+
+        //CANcoder
+        encoder = new CANcoder(Constants.ShooterFlyWheelConstants.kCANcoderID);
+
+        //set mode to coast to prevent damage n stuff
+        leftTalon.setNeutralMode(NeutralModeValue.Coast);
+        rightTalon.setNeutralMode(NeutralModeValue.Coast);
 
         TalonFXConfiguration configs = new TalonFXConfiguration();
         //right motor is clockwise
@@ -30,10 +40,10 @@ public class ShooterFlyWheel extends SubsystemBase{
         leftTalon.setControl(new Follower(Constants.ShooterFlyWheelConstants.kRightCanID, true));
     }
 
-    public void shoot(TalonFX talon){
+    public void shoot(double speed){
         //creates a new Bang Bang controller
         final BangBangController controller = new BangBangController();
         // Controls a motor with the output of the BangBang controller
-        //talon.set();
+        leftTalon.set(controller.calculate(encoder.getVelocity().getValueAsDouble(), speed));
     }
 }
