@@ -17,7 +17,7 @@ public class ShooterFlyWheel extends SubsystemBase{
     private final TalonFX leftTalon;
     private final TalonFX  rightTalon;
 
-    private final CANcoder encoder;
+    //private final CANcoder encoder;
 
     public ShooterFlyWheel(){
         //Motor controlers for left and right sides of shooter
@@ -25,7 +25,7 @@ public class ShooterFlyWheel extends SubsystemBase{
         rightTalon = new TalonFX(Constants.ShooterFlyWheelConstants.kRightCanID);
 
         //CANcoder
-        encoder = new CANcoder(Constants.ShooterFlyWheelConstants.kCANcoderID);
+        //encoder = new CANcoder(Constants.ShooterFlyWheelConstants.kCANcoderID);
 
         //set mode to coast to prevent damage n stuff
         leftTalon.setNeutralMode(NeutralModeValue.Coast);
@@ -40,10 +40,10 @@ public class ShooterFlyWheel extends SubsystemBase{
         leftTalon.setControl(new Follower(Constants.ShooterFlyWheelConstants.kRightCanID, true));
     }
 
-    public void shoot(double speed){
+    public void shoot(double setPoint){
         //creates a new Bang Bang controller
         final BangBangController controller = new BangBangController();
         // Controls a motor with the output of the BangBang controller
-        leftTalon.set(controller.calculate(encoder.getVelocity().getValueAsDouble(), speed));
+        leftTalon.set(controller.calculate(leftTalon.getVelocity().getValueAsDouble(), setPoint));
     }
 }

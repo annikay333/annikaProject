@@ -5,8 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.HoodCommand;
+import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ShooterFlyWheel;
+import frc.robot.subsystems.ShooterHood;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -20,6 +24,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
+  private final ShooterFlyWheel shooterFlyWheel = new ShooterFlyWheel();
+  private final ShootCommand shootCommand = new ShootCommand(shooterFlyWheel);
+  private final ShooterHood shooterHood = new ShooterHood();
+  private final HoodCommand hoodCommandDown = new HoodCommand(shooterHood, false);
+  private final HoodCommand hoodCommandUp = new HoodCommand(shooterHood, true);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverController =
@@ -45,7 +54,11 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureBindings() {}
+  private void configureBindings() {
+    driverController.x().whileTrue(shootCommand);
+    driverController.y().whileTrue(hoodCommandUp);
+    driverController.a().whileTrue(hoodCommandDown);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
