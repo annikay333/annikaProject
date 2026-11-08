@@ -27,8 +27,8 @@ public class RobotContainer {
   private final ShooterFlyWheel shooterFlyWheel = new ShooterFlyWheel();
   private final ShootCommand shootCommand = new ShootCommand(shooterFlyWheel);
   private final ShooterHood shooterHood = new ShooterHood();
-  private final HoodCommand hoodCommandDown = new HoodCommand(shooterHood, false);
-  private final HoodCommand hoodCommandUp = new HoodCommand(shooterHood, true);
+  private final HoodCommand hoodCommandExtend = new HoodCommand(shooterHood, Constants.ShooterHoodConstants.kHoodExtendAngle);
+  private final HoodCommand hoodCommandRetract = new HoodCommand(shooterHood, Constants.ShooterHoodConstants.kHoodRetractAngle);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverController =
@@ -56,8 +56,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     driverController.x().whileTrue(shootCommand);
-    driverController.y().whileTrue(hoodCommandUp);
-    driverController.a().whileTrue(hoodCommandDown);
+    driverController.y().onTrue(hoodCommandExtend);
+    driverController.a().onTrue(hoodCommandRetract);
   }
 
   /**

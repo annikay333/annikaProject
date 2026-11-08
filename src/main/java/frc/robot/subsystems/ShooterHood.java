@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.hardware.CANcoder;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -29,21 +28,9 @@ public class ShooterHood extends SubsystemBase{
         talon.getConfigurator().apply(configs);
     }    
 
-    public void moveHood(double setPoint, boolean movingUp){
-        if (movingUp){
-            //should be clockwise?
-            configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        }else{
-            //should be ccw?
-            configs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        }
-
-        talon.getConfigurator().apply(configs);
-
+    public void setPosition(double setPoint){
+    
         talon.set(pid.calculate(encoder.getPosition().getValueAsDouble(),setPoint));
     }
 
-    public void stop(){
-        talon.set(0);
-    }
 }

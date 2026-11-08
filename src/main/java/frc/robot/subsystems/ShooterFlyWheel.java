@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -28,10 +27,10 @@ public class ShooterFlyWheel extends SubsystemBase{
 
         controller = new BangBangController();
 
-        //CANcoder
-        //encoder = new CANcoder(Constants.ShooterFlyWheelConstants.kCANcoderID);
-
         TalonFXConfiguration configs = new TalonFXConfiguration();
+        //set mode to coast to prevent damage n stuff
+        leftTalon.setNeutralMode(NeutralModeValue.Coast);
+        rightTalon.setNeutralMode(NeutralModeValue.Coast);
         //right motor is clockwise
         configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         rightTalon.getConfigurator().apply(configs);
@@ -41,17 +40,11 @@ public class ShooterFlyWheel extends SubsystemBase{
     }
 
     public void shoot(double setPoint){
-        //set mode to coast to prevent damage n stuff
-        leftTalon.setNeutralMode(NeutralModeValue.Coast);
-        rightTalon.setNeutralMode(NeutralModeValue.Coast);
         // Controls a motor with the output of the BangBang controller
         rightTalon.set(controller.calculate(rightTalon.getVelocity().getValueAsDouble(), setPoint));
     }
 
     public void stop(){
-        //set to brake so that the motors brake
-        leftTalon.setNeutralMode(NeutralModeValue.Brake);
-        rightTalon.setNeutralMode(NeutralModeValue.Brake);
         //stop motor spinning
         rightTalon.set(0);
     }

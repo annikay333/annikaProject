@@ -28,7 +28,6 @@ public final class Constants {
   public static class ShooterFlyWheelConstants{
     public static final int kLeftCanID = 0;
     public static final int kRightCanID = 0;
-    //public static final int kCANcoderID = 0;
     public static final int kShooterFlywheelSpeed = 0;
   }
 
@@ -38,13 +37,8 @@ public final class Constants {
     public static final int kkI = 0;
     public static final int kkD = 0;
     public static final int kCANcoderID = 0;
+    public static final double kHoodExtendAngle = 0;
+    public static final double kHoodRetractAngle = 0;
   }
 
-
-
-
-  //two new subsystems flywheel and angle
-  // - ids for motors and what not
-  //constants
-  //2 new commands
 }

@@ -1,17 +1,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.ShooterHood;
 
 public class HoodCommand extends Command{
 
     private final ShooterHood hood;
-    private final boolean movingUp;
+    private final double targetPosition;
 
-    public HoodCommand(ShooterHood hood, boolean movingUp){
+    public HoodCommand(ShooterHood hood, double targetPosition){
         this.hood = hood;
-        this.movingUp = movingUp;
+        this.targetPosition = targetPosition;
+
+        addRequirements(hood);
     }
 
     // Called when the command is initially scheduled.
@@ -21,12 +22,10 @@ public class HoodCommand extends Command{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hood.moveHood(Constants.ShooterFlyWheelConstants.kShooterFlywheelSpeed, movingUp);
+        hood.setPosition(targetPosition);
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-        hood.stop();
-    }
+    public void end(boolean interrupted) {}
 }
