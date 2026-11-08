@@ -42,4 +42,8 @@ public class ShooterHood extends SubsystemBase{
 
         talon.set(pid.calculate(encoder.getPosition().getValueAsDouble(),setPoint));
     }
+
+    public void stop(){
+        talon.set(0);
+    }
 }
