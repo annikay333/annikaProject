@@ -12,6 +12,7 @@ public class HoodCommand extends Command{
         this.hood = hood;
         this.targetPosition = targetPosition;
 
+        //prevents running other commands that also use hood at the same time
         addRequirements(hood);
     }
 

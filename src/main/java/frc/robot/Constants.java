@@ -25,10 +25,11 @@ public final class Constants {
     public static final int kBackRightCanID = 1;
   }
 
-  public static class ShooterFlyWheelConstants{
+  public static class ShooterFlywheelConstants{
     public static final int kLeftCanID = 0;
     public static final int kRightCanID = 0;
     public static final int kShooterFlywheelSpeed = 0;
+    public static final double kCurrentLimitFlywheel = 40.0;
   }
 
   public static class ShooterHoodConstants{
@@ -39,6 +40,7 @@ public final class Constants {
     public static final int kCANcoderID = 0;
     public static final double kHoodExtendAngle = 0;
     public static final double kHoodRetractAngle = 0;
+    public static final double kCurrentLimitHood = 15.0;
   }
 
 }

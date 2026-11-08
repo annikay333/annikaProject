@@ -9,7 +9,7 @@ import frc.robot.commands.HoodCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ShooterFlyWheel;
+import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterHood;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
-  private final ShooterFlyWheel shooterFlyWheel = new ShooterFlyWheel();
+  private final ShooterFlywheel shooterFlyWheel = new ShooterFlywheel();
   private final ShootCommand shootCommand = new ShootCommand(shooterFlyWheel);
   private final ShooterHood shooterHood = new ShooterHood();
   private final HoodCommand hoodCommandExtend = new HoodCommand(shooterHood, Constants.ShooterHoodConstants.kHoodExtendAngle);
@@ -55,7 +55,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    //hold x to spin flywheels on shooter
     driverController.x().whileTrue(shootCommand);
+
+    //preset hood angles for aiming at a target
     driverController.y().onTrue(hoodCommandExtend);
     driverController.a().onTrue(hoodCommandRetract);
   }

@@ -2,12 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterFlyWheel;
+import frc.robot.subsystems.ShooterFlywheel;
 
 public class ShootCommand extends Command{
-    private ShooterFlyWheel shooter;
-    public ShootCommand(ShooterFlyWheel shooter){
+
+    private ShooterFlywheel shooter;
+
+    public ShootCommand(ShooterFlywheel shooter){
         this.shooter = shooter;
+        //prevents other commands from using shooter at the same time
+        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
@@ -17,7 +21,7 @@ public class ShootCommand extends Command{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooter.shoot(Constants.ShooterFlyWheelConstants.kShooterFlywheelSpeed);
+        shooter.shoot(Constants.ShooterFlywheelConstants.kShooterFlywheelSpeed);
     }
 
     // Called once the command ends or is interrupted.

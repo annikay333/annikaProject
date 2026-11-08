@@ -3,49 +3,48 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterFlyWheel extends SubsystemBase{
+public class ShooterFlywheel extends SubsystemBase{
 
     //left is follower
     private final TalonFX leftTalon;
     private final TalonFX  rightTalon;
-    //creates a new Bang Bang controller
     private final BangBangController controller;
 
-    //private final CANcoder encoder;
 
-    public ShooterFlyWheel(){
-        //Motor controlers for left and right sides of shooter
-        leftTalon = new TalonFX(Constants.ShooterFlyWheelConstants.kLeftCanID);
-        rightTalon = new TalonFX(Constants.ShooterFlyWheelConstants.kRightCanID);
+    public ShooterFlywheel(){
 
+        leftTalon = new TalonFX(Constants.ShooterFlywheelConstants.kLeftCanID);
+        rightTalon = new TalonFX(Constants.ShooterFlywheelConstants.kRightCanID);
         controller = new BangBangController();
 
-        TalonFXConfiguration configs = new TalonFXConfiguration();
-        //set mode to coast to prevent damage n stuff
+
+        //set mode to coast to prevent damage by allowing wheels to speed up and slow naturally
         leftTalon.setNeutralMode(NeutralModeValue.Coast);
         rightTalon.setNeutralMode(NeutralModeValue.Coast);
-        //right motor is clockwise
-        configs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        rightTalon.getConfigurator().apply(configs);
 
-        //Ensure left is following right
-        leftTalon.setControl(new Follower(Constants.ShooterFlyWheelConstants.kRightCanID, true));
+        TalonFXConfiguration configs = new TalonFXConfiguration();
+
+        //set current limit to prevent brownout/tipping braker
+        configs.CurrentLimits.StatorCurrentLimit = Constants.ShooterFlywheelConstants.kCurrentLimitFlywheel;
+
+        rightTalon.getConfigurator().apply(configs);
+        leftTalon.getConfigurator().apply(configs);
+
+        //Ensure left motor is following right and inverted so they spin in opposite directions
+        leftTalon.setControl(new Follower(Constants.ShooterFlywheelConstants.kRightCanID, true));
     }
 
     public void shoot(double setPoint){
-        // Controls a motor with the output of the BangBang controller
+        // Motor to 100% power until it reaches target rotations per second
         rightTalon.set(controller.calculate(rightTalon.getVelocity().getValueAsDouble(), setPoint));
     }
 
     public void stop(){
-        //stop motor spinning
         rightTalon.set(0);
     }
 }
